@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flores para ti 💛</title>
 
 <style>
@@ -29,14 +30,13 @@ body {
 }
 
 #inicio span {
-  font-size: 80px;
+  font-size: 120px; /* MÁS GRANDE 🔥 */
   animation: girar 2s linear infinite;
 }
 
 #inicio p {
+  font-size: 28px;
   margin-top: 10px;
-  font-size: 22px;
-  color: #333;
 }
 
 @keyframes girar {
@@ -51,10 +51,11 @@ body {
 /* TEXTO */
 .mensaje {
   position: absolute;
-  top: 8%;
-  width: 100%;
-  font-size: 26px;
-  color: #333;
+  top: 5%;
+  width: 90%;
+  left: 5%;
+  font-size: 24px;
+  line-height: 1.5;
   opacity: 0;
   animation: aparecer 1.5s ease forwards;
   animation-delay: 3s;
@@ -65,7 +66,7 @@ body {
   position: absolute;
   bottom: 20px;
   width: 100%;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   opacity: 0;
   animation: aparecer 1.5s ease forwards;
@@ -79,24 +80,21 @@ body {
 /* TRONCO */
 .tronco {
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 15px;
-  height: 200px;
+  width: 20px;
+  height: 220px;
   background: #5c3d2e;
-  transform: translateX(-50%);
 }
 
 /* FLORES */
 .flor {
   position: absolute;
-  font-size: 16px;
+  font-size: 20px; /* MÁS GRANDES */
 }
 
 /* CAÍDA */
 .caida {
   position: absolute;
-  font-size: 16px;
+  font-size: 18px;
   animation: caer linear forwards;
 }
 
@@ -109,13 +107,11 @@ body {
 
 <body>
 
-<!-- INICIO -->
 <div id="inicio">
   <span>🌻</span>
   <p>Te amo cielo 💛</p>
 </div>
 
-<!-- TEXTO -->
 <div class="mensaje">
   <b>Flores Amarillas para ti 💛</b><br><br>
 
@@ -129,10 +125,10 @@ body {
 </div>
 
 <div id="tiempo"></div>
-<div class="tronco"></div>
+<div class="tronco" id="tronco"></div>
 
 <script>
-// 🌻 CORAZÓN RELLENO
+// ❤️ CORAZÓN GRANDE Y RELLENO
 function crearFlor(x, y) {
   const flor = document.createElement("div");
   flor.className = "flor";
@@ -146,37 +142,42 @@ function dibujarCorazon() {
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight * 0.45;
 
-  for (let t = 0; t < Math.PI * 2; t += 0.03) {
-    for (let r = 0; r < 10; r++) { // RELLENO 🔥
-      let x = (16 * Math.pow(Math.sin(t), 3)) * (r/10);
+  for (let t = 0; t < Math.PI * 2; t += 0.02) {
+    for (let r = 0; r < 15; r++) { // MÁS RELLENO 🔥
+      let x = (16 * Math.pow(Math.sin(t), 3)) * (r/15);
       let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
-        - 2 * Math.cos(3*t) - Math.cos(4*t)) * (r/10);
+        - 2 * Math.cos(3*t) - Math.cos(4*t)) * (r/15);
 
-      x = centerX + x * 10;
-      y = centerY + y * 10;
+      x = centerX + x * 13; // MÁS GRANDE
+      y = centerY + y * 13;
 
       crearFlor(x, y);
     }
   }
+
+  // 📌 PEGAR TRONCO AL CORAZÓN
+  const tronco = document.getElementById("tronco");
+  tronco.style.left = centerX + "px";
+  tronco.style.bottom = "0px";
 }
 
 setTimeout(dibujarCorazon, 2500);
 
-// 🌻 FLORES CAYENDO
+// 🌻 MUCHAS FLORES CAYENDO
 function crearCaida() {
   const flor = document.createElement("div");
   flor.className = "caida";
   flor.innerHTML = "🌻";
 
   flor.style.left = Math.random() * window.innerWidth + "px";
-  flor.style.animationDuration = (3 + Math.random() * 4) + "s";
+  flor.style.animationDuration = (3 + Math.random() * 3) + "s";
 
   document.body.appendChild(flor);
 
-  setTimeout(() => flor.remove(), 7000);
+  setTimeout(() => flor.remove(), 6000);
 }
 
-setInterval(crearCaida, 150);
+setInterval(crearCaida, 100); // MÁS FLORES 🔥
 
 // ⏱️ CONTADOR
 const inicio = new Date("2026-01-30T08:40:00");
