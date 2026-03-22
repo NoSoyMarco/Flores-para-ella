@@ -9,25 +9,64 @@ body {
   margin: 0;
   background: #f5efe6;
   overflow: hidden;
-  font-family: Arial;
+  font-family: 'Arial';
+}
+
+/* GIRASOL INICIAL */
+#inicio {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #f5efe6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  animation: desaparecer 2s ease forwards;
+  animation-delay: 3s;
+}
+
+#inicio img {
+  width: 120px;
+  animation: girar 3s linear;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes desaparecer {
+  to { opacity: 0; visibility: hidden; }
 }
 
 /* MENSAJE */
 .mensaje {
   position: absolute;
-  top: 10%;
+  top: 8%;
   left: 5%;
   width: 40%;
-  font-size: 20px;
+  font-size: 26px;
   color: #333;
+  opacity: 0;
+  animation: aparecerTexto 2s ease forwards;
+  animation-delay: 3s;
+}
+
+@keyframes aparecerTexto {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* CONTADOR */
 #tiempo {
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 20px;
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  opacity: 0;
+  animation: aparecerTexto 2s ease forwards;
+  animation-delay: 4s;
 }
 
 /* TRONCO */
@@ -36,44 +75,38 @@ body {
   bottom: 0;
   left: 70%;
   width: 25px;
-  height: 220px;
+  height: 230px;
   background: #5c3d2e;
 }
 
-/* FLORES DEL ÁRBOL */
+/* FLORES (girasoles simulados) */
 .flor {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: yellow;
-  border-radius: 50%;
-  box-shadow: 0 0 8px yellow;
+  font-size: 14px;
 }
 
 /* FLORES CAYENDO */
 .caida {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: yellow;
-  border-radius: 50%;
-  opacity: 0.8;
+  font-size: 14px;
   animation: caer linear forwards;
 }
 
 @keyframes caer {
-  from {
-    transform: translateY(-10px);
-  }
-  to {
-    transform: translateY(100vh);
-  }
+  from { transform: translateY(-10px); }
+  to { transform: translateY(100vh); }
 }
 </style>
 </head>
 
 <body>
 
+<!-- GIRASOL INICIAL -->
+<div id="inicio">
+  <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
+</div>
+
+<!-- TEXTO -->
 <div class="mensaje">
   <b>Flores Amarillas para ti 💛</b><br><br>
 
@@ -90,21 +123,22 @@ body {
 <div class="tronco"></div>
 
 <script>
-// 🌼 CREAR FLORES EN CORAZÓN
+// 🌻 CREAR GIRASOLES (emoji)
 function crearFlor(x, y) {
   const flor = document.createElement("div");
   flor.className = "flor";
+  flor.innerHTML = "🌻";
   flor.style.left = x + "px";
   flor.style.top = y + "px";
   document.body.appendChild(flor);
 }
 
-// ❤️ FORMA DE CORAZÓN
+// ❤️ CORAZÓN DE GIRASOLES
 function dibujarCorazon() {
   const centerX = window.innerWidth * 0.7;
   const centerY = window.innerHeight * 0.4;
 
-  for (let t = 0; t < Math.PI * 2; t += 0.04) {
+  for (let t = 0; t < Math.PI * 2; t += 0.05) {
     let x = 16 * Math.pow(Math.sin(t), 3);
     let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
       - 2 * Math.cos(3*t) - Math.cos(4*t));
@@ -116,26 +150,25 @@ function dibujarCorazon() {
   }
 }
 
-dibujarCorazon();
+setTimeout(dibujarCorazon, 3000);
 
 // 🌻 FLORES CAYENDO
 function crearCaida() {
   const flor = document.createElement("div");
   flor.className = "caida";
+  flor.innerHTML = "🌻";
 
   flor.style.left = Math.random() * window.innerWidth + "px";
   flor.style.animationDuration = (3 + Math.random() * 5) + "s";
 
   document.body.appendChild(flor);
 
-  setTimeout(() => {
-    flor.remove();
-  }, 8000);
+  setTimeout(() => flor.remove(), 8000);
 }
 
-setInterval(crearCaida, 150);
+setInterval(crearCaida, 200);
 
-// ⏱️ CONTADOR (TU FECHA)
+// ⏱️ CONTADOR
 const inicio = new Date("2026-01-30T08:40:00");
 
 function actualizarTiempo() {
