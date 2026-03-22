@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Flores para ti 💛</title>
+
+<style>
+body {
+  margin: 0;
+  background: #f5efe6;
+  overflow: hidden;
+  font-family: Arial;
+}
+
+/* MENSAJE */
+.mensaje {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 40%;
+  font-size: 20px;
+  color: #333;
+}
+
+/* CONTADOR */
+#tiempo {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  font-size: 18px;
+}
+
+/* TRONCO */
+.tronco {
+  position: absolute;
+  bottom: 0;
+  left: 70%;
+  width: 25px;
+  height: 220px;
+  background: #5c3d2e;
+}
+
+/* FLORES DEL ÁRBOL */
+.flor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: yellow;
+  border-radius: 50%;
+  box-shadow: 0 0 8px yellow;
+}
+
+/* FLORES CAYENDO */
+.caida {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: yellow;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: caer linear forwards;
+}
+
+@keyframes caer {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="mensaje">
+  <b>Flores Amarillas para ti 💛</b><br><br>
+
+  Quiero ser el ratito que siempre vas a elegir ❤️<br><br>
+
+  Quiero ser el que marque la diferencia y el que te va a amar cada segundo que tenga 💛<br><br>
+
+  Te amo un montón mi pequeña bujía 🌻<br><br>
+
+  Más aventuras nos esperan… ✨
+</div>
+
+<div id="tiempo"></div>
+<div class="tronco"></div>
+
+<script>
+// 🌼 CREAR FLORES EN CORAZÓN
+function crearFlor(x, y) {
+  const flor = document.createElement("div");
+  flor.className = "flor";
+  flor.style.left = x + "px";
+  flor.style.top = y + "px";
+  document.body.appendChild(flor);
+}
+
+// ❤️ FORMA DE CORAZÓN
+function dibujarCorazon() {
+  const centerX = window.innerWidth * 0.7;
+  const centerY = window.innerHeight * 0.4;
+
+  for (let t = 0; t < Math.PI * 2; t += 0.04) {
+    let x = 16 * Math.pow(Math.sin(t), 3);
+    let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
+      - 2 * Math.cos(3*t) - Math.cos(4*t));
+
+    x = centerX + x * 11;
+    y = centerY + y * 11;
+
+    crearFlor(x, y);
+  }
+}
+
+dibujarCorazon();
+
+// 🌻 FLORES CAYENDO
+function crearCaida() {
+  const flor = document.createElement("div");
+  flor.className = "caida";
+
+  flor.style.left = Math.random() * window.innerWidth + "px";
+  flor.style.animationDuration = (3 + Math.random() * 5) + "s";
+
+  document.body.appendChild(flor);
+
+  setTimeout(() => {
+    flor.remove();
+  }, 8000);
+}
+
+setInterval(crearCaida, 150);
+
+// ⏱️ CONTADOR (TU FECHA)
+const inicio = new Date("2026-01-30T08:40:00");
+
+function actualizarTiempo() {
+  const ahora = new Date();
+  const diff = ahora - inicio;
+
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+  const minutos = Math.floor(diff / (1000 * 60)) % 60;
+  const segundos = Math.floor(diff / 1000) % 60;
+
+  document.getElementById("tiempo").innerText =
+    `Mi amor por ti comenzó hace ${dias} días ${horas}h ${minutos}m ${segundos}s`;
+}
+
+setInterval(actualizarTiempo, 1000);
+</script>
+
+</body>
+</html>
