@@ -10,15 +10,17 @@ body {
   background: #f5efe6;
   overflow: hidden;
   font-family: Arial;
+  text-align: center;
 }
 
-/* PANTALLA INICIAL */
+/* INICIO */
 #inicio {
   position: fixed;
   width: 100%;
   height: 100vh;
   background: #f5efe6;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 10;
@@ -28,12 +30,18 @@ body {
 
 #inicio span {
   font-size: 80px;
-  animation: zoom 2.5s ease;
+  animation: girar 2s linear infinite;
 }
 
-@keyframes zoom {
-  0% { transform: scale(0.5); opacity: 0; }
-  100% { transform: scale(1.2); opacity: 1; }
+#inicio p {
+  margin-top: 10px;
+  font-size: 22px;
+  color: #333;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fadeOut {
@@ -44,13 +52,10 @@ body {
 .mensaje {
   position: absolute;
   top: 8%;
-  left: 5%;
-  width: 55%;
-  font-size: 28px;
-  line-height: 1.4;
+  width: 100%;
+  font-size: 26px;
   color: #333;
   opacity: 0;
-  transform: translateY(20px);
   animation: aparecer 1.5s ease forwards;
   animation-delay: 3s;
 }
@@ -59,7 +64,7 @@ body {
 #tiempo {
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  width: 100%;
   font-size: 24px;
   font-weight: bold;
   opacity: 0;
@@ -68,29 +73,27 @@ body {
 }
 
 @keyframes aparecer {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; }
 }
 
 /* TRONCO */
 .tronco {
   position: absolute;
   bottom: 0;
-  left: 75%;
-  width: 20px;
-  height: 250px;
+  left: 50%;
+  width: 15px;
+  height: 200px;
   background: #5c3d2e;
+  transform: translateX(-50%);
 }
 
-/* GIRASOLES */
+/* FLORES */
 .flor {
   position: absolute;
   font-size: 16px;
 }
 
-/* FLORES CAYENDO */
+/* CAÍDA */
 .caida {
   position: absolute;
   font-size: 16px;
@@ -98,20 +101,21 @@ body {
 }
 
 @keyframes caer {
-  from { transform: translateY(-20px); opacity: 1; }
-  to { transform: translateY(100vh); opacity: 0; }
+  from { transform: translateY(-20px); }
+  to { transform: translateY(100vh); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- GIRASOL INICIAL -->
+<!-- INICIO -->
 <div id="inicio">
   <span>🌻</span>
+  <p>Te amo cielo 💛</p>
 </div>
 
-<!-- MENSAJE -->
+<!-- TEXTO -->
 <div class="mensaje">
   <b>Flores Amarillas para ti 💛</b><br><br>
 
@@ -128,7 +132,7 @@ body {
 <div class="tronco"></div>
 
 <script>
-// ❤️ CORAZÓN MÁS DENSO
+// 🌻 CORAZÓN RELLENO
 function crearFlor(x, y) {
   const flor = document.createElement("div");
   flor.className = "flor";
@@ -139,22 +143,23 @@ function crearFlor(x, y) {
 }
 
 function dibujarCorazon() {
-  const centerX = window.innerWidth * 0.75;
-  const centerY = window.innerHeight * 0.4;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight * 0.45;
 
-  for (let t = 0; t < Math.PI * 2; t += 0.02) { // MÁS DENSO 🔥
-    let x = 16 * Math.pow(Math.sin(t), 3);
-    let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
-      - 2 * Math.cos(3*t) - Math.cos(4*t));
+  for (let t = 0; t < Math.PI * 2; t += 0.03) {
+    for (let r = 0; r < 10; r++) { // RELLENO 🔥
+      let x = (16 * Math.pow(Math.sin(t), 3)) * (r/10);
+      let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
+        - 2 * Math.cos(3*t) - Math.cos(4*t)) * (r/10);
 
-    x = centerX + x * 10;
-    y = centerY + y * 10;
+      x = centerX + x * 10;
+      y = centerY + y * 10;
 
-    crearFlor(x, y);
+      crearFlor(x, y);
+    }
   }
 }
 
-// se dibuja después del inicio
 setTimeout(dibujarCorazon, 2500);
 
 // 🌻 FLORES CAYENDO
@@ -173,7 +178,7 @@ function crearCaida() {
 
 setInterval(crearCaida, 150);
 
-// ⏱️ CONTADOR GRANDE
+// ⏱️ CONTADOR
 const inicio = new Date("2026-01-30T08:40:00");
 
 function actualizarTiempo() {
