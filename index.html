@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flores para ti 💛</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+<!-- FUENTE BONITA -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   background: #f5efe6;
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Great Vibes', cursive;
   overflow: hidden;
 }
 
@@ -36,7 +37,7 @@ body {
 }
 
 #inicio p {
-  font-size: 26px;
+  font-size: 28px;
 }
 
 @keyframes girar {
@@ -51,15 +52,15 @@ body {
 /* CONTENEDOR */
 .container {
   display: flex;
-  flex-direction: row;
   height: 100vh;
 }
 
 /* TEXTO */
 .mensaje {
   width: 50%;
-  padding: 20px;
-  font-size: 22px;
+  padding: 25px;
+  font-size: 26px;
+  line-height: 1.8; /* MÁS SEPARADO 🔥 */
   color: #333;
   display: flex;
   flex-direction: column;
@@ -68,9 +69,8 @@ body {
 
 /* CONTADOR */
 #tiempo {
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: 20px;
+  font-size: 20px;
 }
 
 /* ZONA CORAZÓN */
@@ -82,8 +82,8 @@ body {
 /* TRONCO */
 .tronco {
   position: absolute;
-  width: 12px;
-  height: 120px;
+  width: 10px;
+  height: 110px;
   background: #5c3d2e;
   bottom: 0;
 }
@@ -121,7 +121,7 @@ body {
   <div class="mensaje">
     <b>Flores Amarillas para ti 💛</b><br><br>
 
-    Quiero ser el ratito que siempre vas a elegir ❤️<br><br>
+    Quiero ser el rarito que siempre vas a elegir ❤️<br><br>
 
     Quiero ser el que marque la diferencia y el que te va a amar cada segundo que tenga 💛<br><br>
 
@@ -151,7 +151,7 @@ function crearFlor(x, y) {
   flor.style.top = y + "px";
 }
 
-// ❤️ CORAZÓN PEQUEÑO Y CENTRADO
+// ❤️ CORAZÓN + BASE REAL
 function dibujarCorazon() {
   const zona = document.getElementById("zona");
   const centerX = zona.offsetWidth / 2;
@@ -164,19 +164,22 @@ function dibujarCorazon() {
     let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
       - 2 * Math.cos(3*t) - Math.cos(4*t));
 
-    x = centerX + x * 4; // 🔥 MÁS PEQUEÑO
+    x = centerX + x * 4;
     y = centerY + y * 4;
 
     puntos.push({x, y});
     crearFlor(x, y);
   }
 
-  // 📌 PEGAR TRONCO AL PUNTO MÁS BAJO
-  let maxY = Math.max(...puntos.map(p => p.y));
-  let base = puntos.find(p => p.y === maxY);
+  // 🔥 ESTE ES EL FIX REAL
+  // encontrar el punto más bajo del corazón
+  let base = puntos.reduce((a, b) => a.y > b.y ? a : b);
 
   const tronco = document.getElementById("tronco");
-  tronco.style.left = base.x + "px";
+
+  // pegar EXACTO al corazón
+  tronco.style.left = (base.x - 5) + "px"; // centrado
+  tronco.style.top = base.y + "px";
 }
 
 setTimeout(dibujarCorazon, 2500);
