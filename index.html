@@ -9,10 +9,10 @@ body {
   margin: 0;
   background: #f5efe6;
   overflow: hidden;
-  font-family: 'Arial';
+  font-family: Arial;
 }
 
-/* GIRASOL INICIAL */
+/* PANTALLA INICIAL */
 #inicio {
   position: fixed;
   width: 100%;
@@ -22,39 +22,37 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 10;
-  animation: desaparecer 2s ease forwards;
-  animation-delay: 3s;
+  animation: fadeOut 1.5s ease forwards;
+  animation-delay: 2.5s;
 }
 
-#inicio img {
-  width: 120px;
-  animation: girar 3s linear;
+#inicio span {
+  font-size: 80px;
+  animation: zoom 2.5s ease;
 }
 
-@keyframes girar {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes zoom {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1.2); opacity: 1; }
 }
 
-@keyframes desaparecer {
+@keyframes fadeOut {
   to { opacity: 0; visibility: hidden; }
 }
 
-/* MENSAJE */
+/* TEXTO */
 .mensaje {
   position: absolute;
   top: 8%;
   left: 5%;
-  width: 40%;
-  font-size: 26px;
+  width: 55%;
+  font-size: 28px;
+  line-height: 1.4;
   color: #333;
   opacity: 0;
-  animation: aparecerTexto 2s ease forwards;
+  transform: translateY(20px);
+  animation: aparecer 1.5s ease forwards;
   animation-delay: 3s;
-}
-
-@keyframes aparecerTexto {
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* CONTADOR */
@@ -62,39 +60,46 @@ body {
   position: absolute;
   bottom: 20px;
   left: 20px;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
   opacity: 0;
-  animation: aparecerTexto 2s ease forwards;
+  animation: aparecer 1.5s ease forwards;
   animation-delay: 4s;
+}
+
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* TRONCO */
 .tronco {
   position: absolute;
   bottom: 0;
-  left: 70%;
-  width: 25px;
-  height: 230px;
+  left: 75%;
+  width: 20px;
+  height: 250px;
   background: #5c3d2e;
 }
 
-/* FLORES (girasoles simulados) */
+/* GIRASOLES */
 .flor {
   position: absolute;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* FLORES CAYENDO */
 .caida {
   position: absolute;
-  font-size: 14px;
+  font-size: 16px;
   animation: caer linear forwards;
 }
 
 @keyframes caer {
-  from { transform: translateY(-10px); }
-  to { transform: translateY(100vh); }
+  from { transform: translateY(-20px); opacity: 1; }
+  to { transform: translateY(100vh); opacity: 0; }
 }
 </style>
 </head>
@@ -103,10 +108,10 @@ body {
 
 <!-- GIRASOL INICIAL -->
 <div id="inicio">
-  <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
+  <span>🌻</span>
 </div>
 
-<!-- TEXTO -->
+<!-- MENSAJE -->
 <div class="mensaje">
   <b>Flores Amarillas para ti 💛</b><br><br>
 
@@ -123,7 +128,7 @@ body {
 <div class="tronco"></div>
 
 <script>
-// 🌻 CREAR GIRASOLES (emoji)
+// ❤️ CORAZÓN MÁS DENSO
 function crearFlor(x, y) {
   const flor = document.createElement("div");
   flor.className = "flor";
@@ -133,24 +138,24 @@ function crearFlor(x, y) {
   document.body.appendChild(flor);
 }
 
-// ❤️ CORAZÓN DE GIRASOLES
 function dibujarCorazon() {
-  const centerX = window.innerWidth * 0.7;
+  const centerX = window.innerWidth * 0.75;
   const centerY = window.innerHeight * 0.4;
 
-  for (let t = 0; t < Math.PI * 2; t += 0.05) {
+  for (let t = 0; t < Math.PI * 2; t += 0.02) { // MÁS DENSO 🔥
     let x = 16 * Math.pow(Math.sin(t), 3);
     let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t)
       - 2 * Math.cos(3*t) - Math.cos(4*t));
 
-    x = centerX + x * 11;
-    y = centerY + y * 11;
+    x = centerX + x * 10;
+    y = centerY + y * 10;
 
     crearFlor(x, y);
   }
 }
 
-setTimeout(dibujarCorazon, 3000);
+// se dibuja después del inicio
+setTimeout(dibujarCorazon, 2500);
 
 // 🌻 FLORES CAYENDO
 function crearCaida() {
@@ -159,16 +164,16 @@ function crearCaida() {
   flor.innerHTML = "🌻";
 
   flor.style.left = Math.random() * window.innerWidth + "px";
-  flor.style.animationDuration = (3 + Math.random() * 5) + "s";
+  flor.style.animationDuration = (3 + Math.random() * 4) + "s";
 
   document.body.appendChild(flor);
 
-  setTimeout(() => flor.remove(), 8000);
+  setTimeout(() => flor.remove(), 7000);
 }
 
-setInterval(crearCaida, 200);
+setInterval(crearCaida, 150);
 
-// ⏱️ CONTADOR
+// ⏱️ CONTADOR GRANDE
 const inicio = new Date("2026-01-30T08:40:00");
 
 function actualizarTiempo() {
@@ -181,7 +186,7 @@ function actualizarTiempo() {
   const segundos = Math.floor(diff / 1000) % 60;
 
   document.getElementById("tiempo").innerText =
-    `Mi amor por ti comenzó hace ${dias} días ${horas}h ${minutos}m ${segundos}s`;
+    `${dias} días ${horas}h ${minutos}m ${segundos}s contigo 💛`;
 }
 
 setInterval(actualizarTiempo, 1000);
